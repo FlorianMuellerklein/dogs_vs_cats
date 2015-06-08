@@ -33,8 +33,8 @@ def fast_warp(img, tf, output_shape, mode='nearest'):
 def batch_iterator(data, y, batchsize, model, plot):
     '''
     Data augmentation batch iterator for feeding images into CNN.
-    This example will randomly rotate all images in a given batch between -10 and 10 degrees
-    and to random translations between -3 and 3 pixels in all directions.
+    This example will randomly rotate all images in a given batch between -30 and 30 degrees
+    and to random translations between -24 and 24 pixels in all directions.
     Random zooms between 1 and 1.3.
     Random shearing between -10 and 10 degrees.
     '''
