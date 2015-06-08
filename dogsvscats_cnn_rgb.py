@@ -176,7 +176,7 @@ def load_data_test(test_path):
 
 def build_model():
     '''
-    VGG style CNN. Using either PReLU or LeakyReLU in the fully connected layers
+    VGG style CNN. Using either ReLU, PReLU or LeakyReLU in the fully connected layers
     '''
     print('creating the model')
     model = Sequential()
