@@ -214,8 +214,8 @@ def build_model():
 def main():
 
     # switch the commented lines here to alternate between CV testing and making kaggle submission
-    #x_train, x_test, y_train, y_test = load_data_cv('data/train_color.npy')
-    x_train, y_train = load_data_train('data/train_color.npy')
+    x_train, x_test, y_train, y_test = load_data_cv('data/train_color.npy')
+    #x_train, y_train = load_data_train('data/train_color.npy')
 
     model = build_model()
 
@@ -232,37 +232,37 @@ def main():
             plot_bool = False
         loss = batch_iterator(x_train, y_train, 32, model, plot_bool)
         train_loss.append(loss)
-        #valid_avg = model.evaluate(x_test, y_test, show_accuracy = True, verbose = 0)
-        #valid_loss.append(valid_avg[0])
-        #valid_acc.append(valid_avg[1])
+        valid_avg = model.evaluate(x_test, y_test, show_accuracy = True, verbose = 0)
+        valid_loss.append(valid_avg[0])
+        valid_acc.append(valid_avg[1])
         end = time.time() - start
-        print 'iter:', i, '| t loss:', np.round(loss, decimals = 3)#, '| v loss:', np.round(valid_avg[0], decimals = 3), '| v acc:', np.round(valid_avg[1], decimals = 3), '| time:', np.round(end, decimals = 1)
+        print 'iter:', i, '| Tloss:', np.round(loss, decimals = 3), '| Vloss:', np.round(valid_avg[0], decimals = 3), '| Vacc:', np.round(valid_avg[1], decimals = 3), '| time:', np.round(end, decimals = 1)
 
-    #train_loss = np.array(train_loss)
-    #valid_loss = np.array(valid_loss)
-    #valid_acc = np.array(valid_acc)
-    #sns.set_style("whitegrid")
-    #pyplot.plot(train_loss, linewidth = 3, label = 'train loss')
-    #pyplot.plot(valid_loss, linewidth = 3, label = 'valid loss')
-    #pyplot.legend(loc = 2)
-    #pyplot.ylim([0,0.85])
-    #pyplot.twinx()
-    #pyplot.plot(valid_acc, linewidth = 3, label = 'valid accuracy', color = 'r')
-    #pyplot.grid()
-    #pyplot.ylim([0,1])
-    #pyplot.legend(loc = 1)
-    #pyplot.show()
+    train_loss = np.array(train_loss)
+    valid_loss = np.array(valid_loss)
+    valid_acc = np.array(valid_acc)
+    sns.set_style("whitegrid")
+    pyplot.plot(train_loss, linewidth = 3, label = 'train loss')
+    pyplot.plot(valid_loss, linewidth = 3, label = 'valid loss')
+    pyplot.legend(loc = 2)
+    pyplot.ylim([0,0.85])
+    pyplot.twinx()
+    pyplot.plot(valid_acc, linewidth = 3, label = 'valid accuracy', color = 'r')
+    pyplot.grid()
+    pyplot.ylim([0,1])
+    pyplot.legend(loc = 1)
+    pyplot.show()
 
 
-    print("Generating predections")
-    x_train = None
-    x_test = load_data_test('data/test_color.npy')
-    preds = model.predict_classes(x_test, verbose=0)
-    preds = label_enc.inverse_transform(preds).astype(int)
+    #print("Generating predections")
+    #x_train = None
+    #x_test = load_data_test('data/test_color.npy')
+    #preds = model.predict_classes(x_test, verbose=0)
+    #preds = label_enc.inverse_transform(preds).astype(int)
 
-    submission = pd.read_csv('data/sampleSubmission.csv', dtype = int)
-    submission['label'] = preds
-    submission.to_csv('preds/DogsvsCats_cnn.csv', index = False)
+    #submission = pd.read_csv('data/sampleSubmission.csv', dtype = int)
+    #submission['label'] = preds
+    #submission.to_csv('preds/DogsvsCats_cnn.csv', index = False)
 
 if __name__ == '__main__':
     main()
