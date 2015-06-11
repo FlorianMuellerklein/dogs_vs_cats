@@ -95,11 +95,11 @@ def batch_iterator(data, y, batchsize, model):
 
             img_aug = crop(img_aug, crop_amt)
 
-            if r_intensity == 0:
+            if r_intensity == 1:
                 img_aug[:, :, 0] = img_aug[:, :, 0] + (np.std(img_aug[:, :, 0]) * intensity_scaler)
             if g_intensity == 1:
                 img_aug[:, :, 1] = img_aug[:, :, 1] + (np.std(img_aug[:, :, 1]) * intensity_scaler)
-            if b_intensity == 2:
+            if b_intensity == 1:
                 img_aug[:, :, 2] = img_aug[:, :, 2] + (np.std(img_aug[:, :, 2]) * intensity_scaler)
 
             X_batch_aug[j] = img_aug.transpose(2, 0, 1)
