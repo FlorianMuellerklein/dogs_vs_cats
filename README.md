@@ -1,12 +1,37 @@
 # Dogs vs Cats
 
-VGG style convolution neural network for the kaggle Dogs vs Cats competition. Currently gets 95% on kaggle leaderboards without using outside data. 
+VGG style convolution neural network with very leaky ReLU for the kaggle Dogs vs Cats competition. Currently gets 95% on kaggle leaderboards without using outside data and instead realying heavily on data augmentation for generalization.
 
 ### Architecture
 
-The input are 168 x 168 rgb images (after cropping from 196x196). 
-6 convolution layers with filter size 3x3 and ReLU activations. Max pooling layers after every other convolution layer.
-2 hidden layers with dropout. Softmax output.
+| Layer Type | Parameters |
+| -----------|----------- |
+| Input      | size: 168x168, channel:3 |
+| convolution| kernel: 3x3, channel: 32 |
+| leaky ReLU | alpha = 0.33 |
+| convolution| kernel: 3x3, channel: 32 |
+| leaky ReLU | alpha = 0.33 |
+| max pool | kernel: 2x2 |
+| dropout | 0.1 |
+| convolution| kernel: 3x3, channel: 64 |
+| leaky ReLU | alpha = 0.33 |
+| convolution| kernel: 3x3, channel: 64 |
+| leaky ReLU | alpha = 0.33 |
+| max pool | kernel: 2x2 |
+| dropout | 0.2 |
+| convolution| kernel: 3x3, channel: 128 |
+| leaky ReLU | alpha = 0.33 |
+| convolution| kernel: 3x3, channel: 128 |
+| leaky ReLU | alpha = 0.33 |
+| max pool | kernel: 2x2 |
+| dropout | 0.3 |
+| fully connected | units: 2048 |
+| leaky ReLU | alpha = 0.33 |
+| dropout | 0.5 |
+| fully connected | units: 2048 |
+| leaky ReLU | alpha = 0.33 |
+| dropout | 0.5 |
+| softmax | |
 
 ### Data augmentation
 
