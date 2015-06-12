@@ -6,7 +6,7 @@ VGG style convolution neural network with very leaky ReLU for the kaggle Dogs vs
 
 | Layer Type | Parameters |
 | -----------|----------- |
-| Input      | size: 168x168, channel:3 |
+| Input      | size: 168x168, channel: 3 |
 | convolution| kernel: 3x3, channel: 32 |
 | leaky ReLU | alpha = 0.33 |
 | convolution| kernel: 3x3, channel: 32 |
