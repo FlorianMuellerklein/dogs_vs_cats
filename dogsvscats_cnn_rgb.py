@@ -212,35 +212,45 @@ def build_model():
     print('creating the model')
     model = Sequential()
 
-    model.add(Convolution2D(32,3, 3,3, init='glorot_uniform', activation = 'relu', border_mode='full'))
-    model.add(Convolution2D(32,32, 3,3, init='glorot_uniform', activation = 'relu'))
+    model.add(Convolution2D(32,3, 3,3, init='glorot_uniform', activation='linear', border_mode='full'))
+    model.add(LeakyReLU(alpha=0.3))
+    model.add(Convolution2D(32,32, 3,3, init='glorot_uniform', activation='linear'))
+    model.add(LeakyReLU(alpha=0.3))
     model.add(MaxPooling2D(poolsize=(2,2)))
     model.add(Dropout(0.1))
 
-    model.add(Convolution2D(64,32, 3,3, init='glorot_uniform', activation = 'relu', border_mode='full'))
-    model.add(Convolution2D(64,64, 3,3, init='glorot_uniform', activation = 'relu'))
+    model.add(Convolution2D(64,32, 3,3, init='glorot_uniform', activation='linear', border_mode='full'))
+    model.add(LeakyReLU(alpha=0.3))
+    model.add(Convolution2D(64,64, 3,3, init='glorot_uniform', activation='linear'))
+    model.add(LeakyReLU(alpha=0.3))
     model.add(MaxPooling2D(poolsize=(2,2)))
-    model.add(Dropout(0.1))
+    model.add(Dropout(0.2))
 
-    model.add(Convolution2D(128,64, 3,3, init='glorot_uniform', activation = 'relu', border_mode='full'))
-    model.add(Convolution2D(128,128, 3,3, init='glorot_uniform', activation = 'relu'))
+    model.add(Convolution2D(128,64, 3,3, init='glorot_uniform', activation='linear', border_mode='full'))
+    model.add(LeakyReLU(alpha=0.3))
+    model.add(Convolution2D(128,128, 3,3, init='glorot_uniform', activation='linear'))
+    model.add(LeakyReLU(alpha=0.3))
+    model.add(Convolution2D(128,128, 3,3, init='glorot_uniform', activation='linear'))
+    model.add(LeakyReLU(alpha=0.3))
     model.add(MaxPooling2D(poolsize=(2,2)))
-    model.add(Dropout(0.1))
+    model.add(Dropout(0.3))
 
     # convert convolutional filters to flat so they can be feed to fully connected layers
     model.add(Flatten())
 
-    model.add(Dense(56448,2048, init='glorot_uniform', activation = 'relu'))
+    model.add(Dense(51200,2048, init='glorot_uniform', activation='linear'))
+    model.add(LeakyReLU(alpha=0.3))
     model.add(Dropout(0.5))
 
-    model.add(Dense(2048,2048, init='glorot_uniform', activation = 'relu'))
+    model.add(Dense(2048,2048, init='glorot_uniform', activation='linear'))
+    model.add(LeakyReLU(alpha=0.3))
     model.add(Dropout(0.5))
 
     model.add(Dense(2048,2, init='glorot_uniform'))
     model.add(Activation('softmax'))
 
     # setting sgd optimizer parameters
-    sgd = SGD(lr=0.03, decay=0.001, momentum=0.9, nesterov=True)
+    sgd = SGD(lr=0.03, decay=0.0001, momentum=0.9, nesterov=True)
     model.compile(loss='categorical_crossentropy', optimizer=sgd)
     return model
 
@@ -258,7 +268,7 @@ def main():
     train_loss = []
     valid_loss = []
     valid_acc = []
-    for i in range(150):
+    for i in range(200):
         start = time.time()
         loss = batch_iterator(x_train, y_train, 32, model)
         train_loss.append(loss)
