@@ -28,14 +28,7 @@ num_features = imageSize * 3
 label_enc = LabelEncoder()
 
 def batch_iterator(data, y, batchsize, model):
-    '''
-    Data augmentation batch iterator for feeding images into CNN.
-    This example will randomly rotate all images in a given batch between -30 and 30 degrees
-    and to random translations between -24 and 24 pixels in all directions.
-    Random zooms between 1 and 1.3.
-    Random shearing between -10 and 10 degrees.
-    '''
-
+    
     n_samples = data.shape[0]
     loss = []
     for i in range((n_samples + batchsize -1) // batchsize):
