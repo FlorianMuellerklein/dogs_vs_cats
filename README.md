@@ -39,11 +39,13 @@ VGG style convolution neural network with very leaky ReLU for the kaggle Dogs vs
 
 Images are randomly transformed 'on the fly' while they are being prepared in each batch. The CPU will prepare each batch while the GPU will run the previous batch through the network. 
 
-Random rotations between -30 and 30 degrees.
-Random cropping between -24 and 24 pixels in any direction. 
-Random zoom between factors of 1 and 1.3. 
-Random shearing between -10 and 10 degrees.
-Random intensity scaling on RGB channels, independent scaling on each channel.
+* Random rotations between -30 and 30 degrees.
+* Random cropping between -24 and 24 pixels in any direction. 
+* Random zoom between factors of 1 and 1.3. 
+* Random shearing between -10 and 10 degrees.
+* Random intensity scaling on RGB channels, independent scaling on each channel.
+
+![Imgur](http://i.imgur.com/rW0a8Yx.png) ![Imgur](http://i.imgur.com/Xg6zouG.gif)
 
 ### To-do
 
