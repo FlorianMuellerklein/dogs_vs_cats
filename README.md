@@ -1,6 +1,6 @@
 # Dogs vs Cats
 
-VGG style convolution neural network with very leaky ReLU for the kaggle Dogs vs Cats competition. Currently gets 96.6% on kaggle leaderboards without using outside data and instead relying heavily on data augmentation for generalization. Small amount of fine tuning (finishign training with a small number of iterations with very low learning rate and no data augmentation).
+VGG style convolution neural network with very leaky ReLU for the kaggle Dogs vs Cats competition. Currently gets 96.6% on kaggle leaderboards without using outside data and instead relying heavily on data augmentation for generalization. Small amount of fine tuning (finishing training with a small number of iterations with very low learning rate and no data augmentation).
 
 ### Architecture
 
