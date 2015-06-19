@@ -26,6 +26,7 @@ PIXELS = 192
 cropPIXELS = 168
 imageSize = PIXELS * PIXELS
 num_features = imageSize * 3
+crop_features = cropPIXELS * cropPIXELS * 3
 scaler = StandardScaler()
 minmax = MinMaxScaler()
 label_enc = LabelEncoder()
@@ -197,11 +198,11 @@ def load_data_test(test_path):
     testing = np.load(test_path).astype('float32')
 
     # split training inputs and scale data 0 to 1
-    testing_inputs = testing[:,0:num_features].astype('float32')
+    testing_inputs = testing[:,0:crop_features].astype('float32')
     testing_inputs = testing_inputs / 255.
 
     # reshaping training and testing data so it can be feed to convolutional layers
-    testing_inputs = testing_inputs.reshape(testing_inputs.shape[0], 3, PIXELS, PIXELS)
+    testing_inputs = testing_inputs.reshape(testing_inputs.shape[0], 3, cropPIXELS, cropPIXELS)
 
     return testing_inputs
 
@@ -213,40 +214,40 @@ def build_model():
     model = Sequential()
 
     model.add(Convolution2D(32,3, 3,3, init='glorot_uniform', activation='linear', border_mode='full'))
-    model.add(LeakyReLU(alpha=0.3))
+    model.add(LeakyReLU(alpha=0.2))
     model.add(Convolution2D(32,32, 3,3, init='glorot_uniform', activation='linear'))
-    model.add(LeakyReLU(alpha=0.3))
+    model.add(LeakyReLU(alpha=0.2))
     model.add(MaxPooling2D(poolsize=(2,2)))
     model.add(Dropout(0.1))
 
     model.add(Convolution2D(64,32, 3,3, init='glorot_uniform', activation='linear', border_mode='full'))
-    model.add(LeakyReLU(alpha=0.3))
+    model.add(LeakyReLU(alpha=0.2))
     model.add(Convolution2D(64,64, 3,3, init='glorot_uniform', activation='linear'))
-    model.add(LeakyReLU(alpha=0.3))
+    model.add(LeakyReLU(alpha=0.2))
     model.add(MaxPooling2D(poolsize=(2,2)))
     model.add(Dropout(0.2))
 
     model.add(Convolution2D(128,64, 3,3, init='glorot_uniform', activation='linear', border_mode='full'))
-    model.add(LeakyReLU(alpha=0.3))
+    model.add(LeakyReLU(alpha=0.2))
     model.add(Convolution2D(128,128, 3,3, init='glorot_uniform', activation='linear'))
-    model.add(LeakyReLU(alpha=0.3))
+    model.add(LeakyReLU(alpha=0.2))
     model.add(Convolution2D(128,128, 3,3, init='glorot_uniform', activation='linear'))
-    model.add(LeakyReLU(alpha=0.3))
+    model.add(LeakyReLU(alpha=0.2))
     model.add(MaxPooling2D(poolsize=(2,2)))
     model.add(Dropout(0.3))
 
     # convert convolutional filters to flat so they can be feed to fully connected layers
     model.add(Flatten())
 
-    model.add(Dense(51200,2048, init='glorot_uniform', activation='linear'))
-    model.add(LeakyReLU(alpha=0.3))
+    model.add(Dense(51200,1024, init='glorot_uniform', activation='linear'))
+    model.add(LeakyReLU(alpha=0.2))
     model.add(Dropout(0.5))
 
-    model.add(Dense(2048,2048, init='glorot_uniform', activation='linear'))
-    model.add(LeakyReLU(alpha=0.3))
+    model.add(Dense(1024,1024, init='glorot_uniform', activation='linear'))
+    model.add(LeakyReLU(alpha=0.2))
     model.add(Dropout(0.5))
 
-    model.add(Dense(2048,2, init='glorot_uniform'))
+    model.add(Dense(1024,2, init='glorot_uniform'))
     model.add(Activation('softmax'))
 
     # setting sgd optimizer parameters
@@ -268,7 +269,7 @@ def main():
     train_loss = []
     valid_loss = []
     valid_acc = []
-    for i in range(200):
+    for i in range(150):
         start = time.time()
         loss = batch_iterator(x_train, y_train, 32, model)
         train_loss.append(loss)
@@ -293,6 +294,8 @@ def main():
     pyplot.legend(loc = 1)
     pyplot.show()
 
+    print("Saving model ... ")
+    model.save_weights('dogs_v_cats_cnn')
 
     #print("Generating predections")
     #x_train = None
