@@ -45,7 +45,7 @@ Images are randomly transformed 'on the fly' while they are being prepared in ea
 * Random shearing between -10 and 10 degrees.
 * Random intensity scaling on RGB channels, independent scaling on each channel.
 
-![Imgur](http://i.imgur.com/rW0a8Yx.png) ![Imgur](http://i.imgur.com/Xg6zouG.gif)
+![Imgur](http://i.imgur.com/rW0a8Yx.png)![Imgur](http://i.imgur.com/Xg6zouG.gif)
 
 ### To-do
 
